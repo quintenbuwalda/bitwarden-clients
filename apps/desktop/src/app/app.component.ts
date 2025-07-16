@@ -106,6 +106,14 @@ const SyncInterval = 6 * 60 * 60 * 1000; // 6 hours
     </div>
 
     <bit-toast-container></bit-toast-container>
+    <app-hotbar *ngIf="showHotbar"></app-hotbar>
+  showHotbar = false;
+  // Listen for a custom event to toggle the hotbar (to be triggered by Electron IPC)
+  ngOnInit() {
+    window.addEventListener('toggle-hotbar', () => {
+      this.showHotbar = !this.showHotbar;
+    });
+  }
   `,
   standalone: false,
 })

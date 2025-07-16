@@ -10,6 +10,7 @@ import { JslibModule } from "@bitwarden/angular/jslib.module";
 
 import { AvatarComponent } from "../components/avatar.component";
 import { ServicesModule } from "../services/services.module";
+import { HotbarComponent } from '../hotbar/hotbar.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { ServicesModule } from "../services/services.module";
     ScrollingModule,
     ServicesModule,
   ],
-  declarations: [AvatarComponent],
+  declarations: [AvatarComponent, HotbarComponent],
   exports: [
     CommonModule,
     A11yModule,
@@ -36,6 +37,7 @@ import { ServicesModule } from "../services/services.module";
     ScrollingModule,
     ServicesModule,
     AvatarComponent,
+    HotbarComponent,
   ],
   providers: [DatePipe],
 })

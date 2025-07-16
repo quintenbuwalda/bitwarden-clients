@@ -1,0 +1,19 @@
+<div class="hotbar-overlay">
+  <div class="hotbar-modal">
+    <input #searchInput type="text" [(ngModel)]="search" (ngModelChange)="loadItems()" placeholder="Search items..." autofocus />
+    <div *ngIf="loading" class="hotbar-loading">Loading…</div>
+    <div *ngIf="error" class="hotbar-error">{{ error }}</div>
+    <ul *ngIf="!loading && !error && filteredItems.length">
+      <li *ngFor="let item of filteredItems; let i = index" [class.selected]="i === selectedIndex">
+        <span class="hotbar-item-title">{{ item.name }}</span>
+        <span class="actions">
+          <button (click)="copy('username')" [disabled]="!item.username">{{ copiedType === 'username' ? 'Copied!' : 'Copy Username' }}</button>
+          <button (click)="copy('password')" [disabled]="!item.password">{{ copiedType === 'password' ? 'Copied!' : 'Copy Password' }}</button>
+          <button (click)="copy('totp')" [disabled]="!item.totp">{{ copiedType === 'totp' ? 'Copied!' : 'Copy TOTP' }}</button>
+        </span>
+      </li>
+    </ul>
+    <div *ngIf="!loading && !error && !filteredItems.length" class="hotbar-empty">No items found.</div>
+    <div class="hotbar-hint">Use ↑/↓ to navigate, ⌘/Ctrl+1/2/3 to copy fields, Esc to close</div>
+  </div>
+</div>

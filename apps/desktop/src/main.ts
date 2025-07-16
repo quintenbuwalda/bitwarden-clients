@@ -4,7 +4,7 @@ import "core-js/proposals/explicit-resource-management";
 
 import * as path from "path";
 
-import { app } from "electron";
+import { app, globalShortcut, BrowserWindow } from "electron";
 import { Subject, firstValueFrom } from "rxjs";
 
 import { SsoUrlService } from "@bitwarden/auth/common";
@@ -107,7 +107,15 @@ export class Main {
     }
 
     app.on("ready", () => {
-      // on ready stuff...
+      // Register global shortcut for hotbar (Cmd+Shift+Space on macOS, Ctrl+Shift+Space elsewhere)
+      const shortcut = process.platform === 'darwin' ? 'CommandOrControl+Shift+Space' : 'Control+Shift+Space';
+      globalShortcut.register(shortcut, () => {
+        // Send a custom event to the renderer process to toggle the hotbar
+        const win = BrowserWindow.getAllWindows()[0];
+        if (win) {
+          win.webContents.executeJavaScript(`window.dispatchEvent(new Event('toggle-hotbar'))`);
+        }
+      });
     });
 
     if (appDataPath != null) {
